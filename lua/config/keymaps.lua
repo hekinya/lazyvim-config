@@ -62,3 +62,19 @@ if vim.g.neovide then
     vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1
   end, { desc = "Decrease Neovide scale factor" })
 end
+
+-- Terminal shortcuts retained from the previous configuration.
+-- Open a terminal for the directory currently selected in Explorer.
+local function terminal_here(focus)
+  local opts = { cwd = vim.fn.getcwd() }
+  if focus then
+    Snacks.terminal.focus(nil, opts)
+  else
+    Snacks.terminal(nil, opts)
+  end
+end
+
+vim.keymap.set("n", "<leader>ft", function() terminal_here(false) end, { desc = "Terminal (Current Directory)" })
+vim.keymap.set("n", "<leader>fT", function() terminal_here(false) end, { desc = "Terminal (Current Directory)" })
+vim.keymap.set({ "n", "t" }, "<C-/>", function() terminal_here(true) end, { desc = "Terminal (Current Directory)" })
+vim.keymap.set({ "n", "t" }, "<C-_>", function() terminal_here(true) end, { desc = "Terminal (Current Directory)" })
